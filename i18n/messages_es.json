@@ -1,0 +1,50 @@
+{
+	"pathCryptography" : "Criptografía",
+	
+	"pathKey" : "Criptografía.Llaves",
+	
+	"nameKeySecret"  : "Llave secreta",
+	"nameKeyPrivate" : "Llave Privada",
+	"nameKeyPublic"  : "Llave publica",
+	
+	"nameGenerateAsymmetricKeysForEncryption"     : "Generar llaves asimétricas para encriptación",
+	"mnemonicGenerateAsymmetricKeysForEncryption" : "GenerarLlavesAsimétricasParaEncriptación",
+	"childrenGenerateAsymmetricKeysForEncryption" : "Algoritmo",
+	"leafGenerateAsymmetricKeysForEncryption"     : "Generar llaves asimétricas para encriptación",
+	
+	"nameGenerateAsymmetricKeysForSigning"     : "Generar llaves asimétricas para firmado",
+	"mnemonicGenerateAsymmetricKeysForSigning" : "GenerarLlavesAsimétricasParaFirmado",
+	"childrenGenerateAsymmetricKeysForSigning" : "Algoritmo",
+	"leafGenerateAsymmetricKeysForSigning"     : "Generar llaves asimétricas para firmado",
+	
+	"pathEncryption" : "Criptografía.Encriptación",
+	
+	"nameEncrypt"     : "Encriptar",
+	"mnemonicEncrypt" : "Encriptar",
+	"childrenEncrypt" : [ "Datos", "Llave" ],
+	"leafEncrypt"     : "Encriptar",
+	
+	"nameDecrypt"     : "Desencriptar",
+	"mnemonicDecrypt" : "Desencriptar",
+	"childrenDecrypt" : [ "Cifrado", "Key" ],
+	"leafDecrypt"     : "Desencriptar",
+	
+	"pathHashing" : "Criptografía.Hashing",
+	
+	"nameHash"     : "Hash",
+	"mnemonicHash" : "Hash",
+	"childrenHash" : [ "Búfer de bytes", "Algoritmo" ],
+	"leafHash"     : "Hash",
+	
+	"pathSigning" : "Criptografía.Firmado",
+	
+	"nameSign"     : "Firmar",
+	"mnemonicSign" : "Firmar",
+	"childrenSign" : [ "Datos", "Llave" ],
+	"leafSign"     : "Firmar",
+	
+	"nameVerify"     : "Verificar firma",
+	"mnemonicVerify" : "VerificarFirma",
+	"childrenVerify" : [ "Datos", "Firma", "Key" ],
+	"leafVerify"     : "Verificar firma"
+}

@@ -1,0 +1,50 @@
+{
+	"pathCryptography" : "Cryptography",
+	
+	"pathKey" : "Cryptography.Key",
+	
+	"nameKeySecret"  : "Secret key",
+	"nameKeyPrivate" : "Private key",
+	"nameKeyPublic"  : "Public key",
+	
+	"nameGenerateAsymmetricKeysForEncryption"     : "Generate asymmetric keys for encryption",
+	"mnemonicGenerateAsymmetricKeysForEncryption" : "GenerateAsymmetricKeysForEncryption",
+	"childrenGenerateAsymmetricKeysForEncryption" : "Algorithm",
+	"leafGenerateAsymmetricKeysForEncryption"     : "Generate asymmetric keys for encryption",
+	
+	"nameGenerateAsymmetricKeysForSigning"     : "Generate asymmetric keys for signing",
+	"mnemonicGenerateAsymmetricKeysForSigning" : "GenerateAsymmetricKeysForSigning",
+	"childrenGenerateAsymmetricKeysForSigning" : "Algorithm",
+	"leafGenerateAsymmetricKeysForSigning"     : "Generate asymmetric keys for signing",
+	
+	"pathEncryption" : "Cryptography.Encryption",
+	
+	"nameEncrypt"     : "Encrypt",
+	"mnemonicEncrypt" : "Encrypt",
+	"childrenEncrypt" : [ "Plain", "Key" ],
+	"leafEncrypt"     : "Encrypt",
+	
+	"nameDecrypt"     : "Decrypt",
+	"mnemonicDecrypt" : "Decrypt",
+	"childrenDecrypt" : [ "Cipher", "Key" ],
+	"leafDecrypt"     : "Decrypt",
+	
+	"pathHashing" : "Cryptography.Hashing",
+	
+	"nameHash"     : "Hash",
+	"mnemonicHash" : "Hash",
+	"childrenHash" : [ "Byte buffer", "Algorithm" ],
+	"leafHash"     : "Hash",
+	
+	"pathSigning" : "Cryptography.Signing",
+	
+	"nameSign"     : "Sign",
+	"mnemonicSign" : "Sign",
+	"childrenSign" : [ "Data", "Key" ],
+	"leafSign"     : "Sign",
+	
+	"nameVerify"     : "Verify signature",
+	"mnemonicVerify" : "VerifySignature",
+	"childrenVerify" : [ "Data", "Signature", "Key" ],
+	"leafVerify"     : "Verify signature"
+}
