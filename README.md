@@ -11,3 +11,31 @@ The GitHub organization [formulae-org](https://github.com/formulae-org) encompas
 <!-- Take a look at this [tutorial](https://formulae.org/?script=tutorials/Arithmetic) to know the capabilities of the Fōrmulæ arithmetic package. -->
 
 ### Capabilities ###
+
+#### Key management ####
+
+##### Key generation #####
+
+* Generation of asymmetric keys for encryption/decryption. [RSA-OAEP](https://www.rfc-editor.org/rfc/rfc3447#section-7.1) keys with either SHA-1, SHA-256, SHA-384, or SHA-512 digest function.
+* Generation of asymmetric keys for signing/verification. [RSASSA-PKCS1-v1_5](https://www.rfc-editor.org/rfc/rfc3447#section-8.2) keys with either SHA-1, SHA-256, SHA-384, or SHA-512 digest function.
+
+The keys are serialized as Base64 from their [PKCS #8 DER-encoded](https://en.wikipedia.org/wiki/PKCS_8) format for private keys, and [Subject Public Key Info (SPKI) DER-encoded](https://datatracker.ietf.org/doc/html/rfc5280#section-4.1) format for public keys.
+
+#### Hashing ####
+
+Supported algorithms:
+
+* SHA-1
+* SHA-256
+* SHA-384
+* SHA-512
+
+#### Encryption
+
+* Encrypt operation
+* Decrypt operation
+
+#### Signing ####
+
+* Generation of a digital signture
+* Verification of a digital signature
