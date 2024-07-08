@@ -35,7 +35,7 @@ Supported algorithms:
 * Encrypt operation
 * Decrypt operation
 
-#### Signing ####
+#### Digital signatures ####
 
 * Generation of a digital signture
 * Verification of a digital signature
