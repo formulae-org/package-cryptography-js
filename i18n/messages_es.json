@@ -21,12 +21,12 @@
 	
 	"nameEncrypt"     : "Encriptar",
 	"mnemonicEncrypt" : "Encriptar",
-	"childrenEncrypt" : [ "Datos", "Llave" ],
+	"childrenEncrypt" : [ "Datos a encriptar", "Llave" ],
 	"leafEncrypt"     : "Encriptar",
 	
 	"nameDecrypt"     : "Desencriptar",
 	"mnemonicDecrypt" : "Desencriptar",
-	"childrenDecrypt" : [ "Cifrado", "Key" ],
+	"childrenDecrypt" : [ "Datos encriptados", "Llave" ],
 	"leafDecrypt"     : "Desencriptar",
 	
 	"pathHashing" : "Criptografía.Hashing",
@@ -45,6 +45,6 @@
 	
 	"nameVerify"     : "Verificar firma",
 	"mnemonicVerify" : "VerificarFirma",
-	"childrenVerify" : [ "Datos", "Firma", "Key" ],
+	"childrenVerify" : [ "Datos", "Firma", "Llave" ],
 	"leafVerify"     : "Verificar firma"
 }

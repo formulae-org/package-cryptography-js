@@ -155,7 +155,6 @@ Cryptography.encrypt = async (encrypt, session) => {
 	
 	if (data !== null) {
 		let cipher = await crypto.subtle.encrypt({ name: "RSA-OAEP" }, key, data);
-		
 		let result = Formulae.createExpression("Data.ByteBuffer");
 		result.set("Value", cipher);
 		encrypt.replaceBy(result);

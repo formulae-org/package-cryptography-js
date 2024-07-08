@@ -15,7 +15,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-  
+
 'use strict';
 
 export class Cryptography extends Formulae.ExpressionPackage {};
@@ -57,7 +57,7 @@ Cryptography.Key = class extends Expression.Literal {
 	}
 	
 	getSerializationNames() {
-		return [ "Value", "Type", "Algorithm" ];
+		return [ "Value", "Type", "Algorithm", "Parameter" ];
 	}
 	
 	async getSerializationStrings() {
@@ -97,7 +97,12 @@ Cryptography.Key = class extends Expression.Literal {
 					arrayBuffer = await window.crypto.subtle.exportKey("spki", this.key);
 				}
 				
-				return [ Utils.bytesToBase64(new Uint8Array(arrayBuffer)), this.key.type, this.key.algorithm.name ];
+				return [
+					Utils.bytesToBase64(new Uint8Array(arrayBuffer)), // value
+					this.key.type,                                    // type
+					this.key.algorithm.name,                          // algorithm
+					this.key.algorithm.hash.name                      // parameter
+				];
 			}
 		}
 	}
@@ -105,6 +110,7 @@ Cryptography.Key = class extends Expression.Literal {
 	setSerializationStrings(strings, promises) {
 		let type  = strings[1];
 		let algorithmName = strings[2];
+		let parameter = strings[3];
 		
 		let format;
 		let keyData;
@@ -142,13 +148,13 @@ Cryptography.Key = class extends Expression.Literal {
 				if (type == "private") {
 					format = "pkcs8";
 					keyData = Utils.base64ToBytes(strings[0]);
-					algorithm = { name: algorithmName, hash: "SHA-256" };
+					algorithm = { name: algorithmName, hash: parameter };
 					keyUsages = [ algorithmName == "RSA-OAEP" ? "decrypt" : "sign" ];
 				}
 				else {
 					format = "spki";
 					keyData = Utils.base64ToBytes(strings[0]);
-					algorithm = { name: algorithmName, hash: "SHA-256" };
+					algorithm = { name: algorithmName, hash: parameter };
 					keyUsages = [ algorithmName == "RSA-OAEP" ? "encrypt" : "verify" ];
 				}
 			}
