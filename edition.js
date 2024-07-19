@@ -23,6 +23,7 @@ export class Cryptography extends Formulae.EditionPackage {};
 Cryptography.setEditions = function() {
 	[
 		"GenerateAsymmetricKeysForEncryption",
+		"GenerateSymmetricKeyForEncryption",
 		"GenerateAsymmetricKeysForSigning"
 	].forEach(
 		tag => Formulae.addEdition(
@@ -32,6 +33,8 @@ Cryptography.setEditions = function() {
 			() => Expression.wrapperEdition("Cryptography.Key." + tag)
 		)
 	);
+	
+	// Operations
 	
 	[
 		[ "Encryption", "Encrypt", 2 ],
@@ -48,11 +51,35 @@ Cryptography.setEditions = function() {
 		)
 	);
 	
-	[ "SHA-1", "SHA-256", "SHA-384", "SHA-512" ].forEach(tag => Formulae.addEdition(
-		"Cryptography.Hashing.Algorithm",
+	Formulae.addEdition(
+		this.messages.pathRandom,
 		null,
-		tag,
-		() => Expression.replacingEdition("Cryptography.Hashing.Algorithm." + tag)
+		this.messages.leafRandom,
+		() => Expression.multipleEdition("Cryptography.Random", 1, 0)
+	);
+	
+	// Algorithms
+	
+	[	
+		[ "Hashing", "Hashing", "SHA-1"   ],
+		[ "Hashing", "Hashing", "SHA-256" ],
+		[ "Hashing", "Hashing", "SHA-384" ],
+		[ "Hashing", "Hashing", "SHA-512" ],
+		[ "Asymmetric encryption", "AsymmetricEncryption", "RSA-OAEP" ],
+		[ "SymmetricEncryption", "SymmetricEncryption", "AES-CTR" ],
+		[ "SymmetricEncryption", "SymmetricEncryption", "AES-CBC" ],
+		[ "SymmetricEncryption", "SymmetricEncryption", "AES-GCM" ],
+		[ "Signing", "Signing", "RSASSA-PKCS1-v1_5" ],
+		[ "Signing", "Signing", "RSA-PSS"           ],
+		[ "Signing", "Signing", "ECDSA"             ],
+		[ "Signing", "Signing", "HMAC"              ],
+
+	].forEach(
+		row => Formulae.addEdition(
+		"Cryptography.Algorithm." + row[0],
+		null,
+		row[2],
+		() => Expression.replacingEdition("Cryptography.Algorithm." + row[1] + "." + row[2])
 	));
 };
 

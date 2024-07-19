@@ -86,24 +86,39 @@ Cryptography.Key = class extends Expression.Literal {
 		*/
 		
 		switch (this.key.algorithm.name) {
-			case "RSA-OAEP":
-			case "RSASSA-PKCS1-v1_5": {
-				let arrayBuffer;
-				
-				if (this.key.type === "private") {
-					arrayBuffer = await window.crypto.subtle.exportKey("pkcs8", this.key);
+			case "RSA-OAEP":          // encryption
+			case "RSASSA-PKCS1-v1_5": // signing
+			case "RSA-PSS":           // signing
+				{
+					let arrayBuffer;
+					
+					if (this.key.type === "private") {
+						arrayBuffer = await window.crypto.subtle.exportKey("pkcs8", this.key);
+					}
+					else { // public
+						arrayBuffer = await window.crypto.subtle.exportKey("spki", this.key);
+					}
+					
+					return [
+						Utils.bytesToBase64(new Uint8Array(arrayBuffer)), // value
+						this.key.type,                                    // type
+						this.key.algorithm.name,                          // algorithm
+						this.key.algorithm.hash.name                      // parameter
+					];
 				}
-				else {
-					arrayBuffer = await window.crypto.subtle.exportKey("spki", this.key);
+			
+			case "AES-CTR":
+			case "AES-CBC":
+			case "AES-GCM":
+				{
+					let arrayBuffer = await window.crypto.subtle.exportKey("raw", this.key);
+					return [
+						Utils.bytesToBase64(new Uint8Array(arrayBuffer)), // value
+						this.key.type,                                    // type
+						this.key.algorithm.name,                          // algorithm
+						this.key.algorithm.length.toString()              // parameter
+					];
 				}
-				
-				return [
-					Utils.bytesToBase64(new Uint8Array(arrayBuffer)), // value
-					this.key.type,                                    // type
-					this.key.algorithm.name,                          // algorithm
-					this.key.algorithm.hash.name                      // parameter
-				];
-			}
 		}
 	}
 	
@@ -143,21 +158,35 @@ Cryptography.Key = class extends Expression.Literal {
 		*/
 		
 		switch (algorithmName) {
-			case "RSA-OAEP":
-			case "RSASSA-PKCS1-v1_5": {
-				if (type == "private") {
-					format = "pkcs8";
-					keyData = Utils.base64ToBytes(strings[0]);
-					algorithm = { name: algorithmName, hash: parameter };
-					keyUsages = [ algorithmName == "RSA-OAEP" ? "decrypt" : "sign" ];
+			case "RSA-OAEP":          // encryption
+			case "RSASSA-PKCS1-v1_5": // signing
+			case "RSA-PSS":           // signing
+				{
+					if (type == "private") {
+						format = "pkcs8";
+						keyData = Utils.base64ToBytes(strings[0]);
+						algorithm = { name: algorithmName, hash: parameter };
+						keyUsages = [ algorithmName == "RSA-OAEP" ? "decrypt" : "sign" ];
+					}
+					else { // public
+						format = "spki";
+						keyData = Utils.base64ToBytes(strings[0]);
+						algorithm = { name: algorithmName, hash: parameter };
+						keyUsages = [ algorithmName == "RSA-OAEP" ? "encrypt" : "verify" ];
+					}
 				}
-				else {
-					format = "spki";
+				break;
+			
+			case "AES-CTR":
+			case "AES-CBC":
+			case "AES-GCM":
+				{
+					format = "raw";
 					keyData = Utils.base64ToBytes(strings[0]);
-					algorithm = { name: algorithmName, hash: parameter };
-					keyUsages = [ algorithmName == "RSA-OAEP" ? "encrypt" : "verify" ];
+					algorithm = { name: algorithmName, length: Number(parameter) };
+					keyUsages = [ "encrypt", "decrypt" ];
 				}
-			}
+				break;
 		}
 		
 		let promise = window.crypto.subtle.importKey(
@@ -174,7 +203,7 @@ Cryptography.Key = class extends Expression.Literal {
 	}
 	
 	getLiteral() {
-		return "<" + this.key.type + " - " + this.key.usages + ">";
+		return "<" + this.key.type + " - " + this.key.usages.join(", ") + ">";
 	}
 }
 
@@ -191,14 +220,17 @@ Cryptography.setExpressions = function(module) {
 		)
 	);
 	
+	// Operations
+	
 	[
-		[ "Key",        "GenerateAsymmetricKeysForEncryption", 1, 1 ],
-		[ "Key",        "GenerateAsymmetricKeysForSigning",    1, 1 ],
-		[ "Encryption", "Encrypt",                             2, 2 ],
-		[ "Encryption", "Decrypt",                             2, 2 ],
+		[ "Key",        "GenerateAsymmetricKeysForEncryption", 1, 2 ],
+		[ "Key",        "GenerateSymmetricKeyForEncryption",   1, 2 ],
+		[ "Key",        "GenerateAsymmetricKeysForSigning",    1, 2 ],
+		[ "Encryption", "Encrypt",                             2, 3 ],
+		[ "Encryption", "Decrypt",                             2, 3 ],
 		[ "Hashing",    "Hash",                                2, 2 ],
-		[ "Signing",    "Sign",                                2, 2 ],
-		[ "Signing",    "Verify",                              3, 3 ],
+		[ "Signing",    "Sign",                                2, 3 ],
+		[ "Signing",    "Verify",                              3, 4 ],
 	].forEach(
 		row => Formulae.setExpression(
 			module,
@@ -215,14 +247,43 @@ Cryptography.setExpressions = function(module) {
 		)
 	);
 	
-	[ "SHA-1", "SHA-256", "SHA-384", "SHA-512" ].forEach(
-		tag => Formulae.setExpression(
+	Formulae.setExpression(
+		module,
+		"Cryptography.Random",
+		{
+			clazz:        Expression.Function,
+			getTag:       () => "Cryptography.Random",
+			getMnemonic:  () => Cryptography.messages.mnemonicRandom,
+			getName:      () => Cryptography.messages.nameRandom,
+			getChildName: index => Cryptography.messages.childRandom,
+			min:          1,
+			max:          1
+		}
+	);
+	
+	// Algorithms
+	
+	[
+		[ "Hashing", "SHA-1"   ],
+		[ "Hashing", "SHA-256" ],
+		[ "Hashing", "SHA-384" ],
+		[ "Hashing", "SHA-512" ],
+		[ "AsymmetricEncryption", "RSA-OAEP" ],
+		[ "SymmetricEncryption", "AES-CTR" ],
+		[ "SymmetricEncryption", "AES-CBC" ],
+		[ "SymmetricEncryption", "AES-GCM" ],
+		[ "Signing", "RSASSA-PKCS1-v1_5" ],
+		[ "Signing", "RSA-PSS"           ],
+		[ "Signing", "ECDSA"             ],
+		[ "Signing", "HMAC"              ],
+	].forEach(
+		row => Formulae.setExpression(
 			module,
-			"Cryptography.Hashing.Algorithm." + tag,
+			"Cryptography.Algorithm." + row[0] + "." + row[1],
 			{
 				clazz:      Expression.LabelExpression,
-				getTag:     () => "Cryptography.Hashing.Algorithm." + tag,
-				getLabel:   () => tag,
+				getTag:     () => "Cryptography.Algorithm." + row[0] + "." + row[1],
+				getLabel:   () => row[1],
 				getName:    () => "yyy"
 			}
 		)

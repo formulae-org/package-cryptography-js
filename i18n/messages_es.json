@@ -9,24 +9,29 @@
 	
 	"nameGenerateAsymmetricKeysForEncryption"     : "Generar llaves asimétricas para encriptación",
 	"mnemonicGenerateAsymmetricKeysForEncryption" : "GenerarLlavesAsimétricasParaEncriptación",
-	"childrenGenerateAsymmetricKeysForEncryption" : "Algoritmo",
+	"childrenGenerateAsymmetricKeysForEncryption" : [ "Algoritmo", "Opciones" ],
 	"leafGenerateAsymmetricKeysForEncryption"     : "Generar llaves asimétricas para encriptación",
+	
+	"nameGenerateSymmetricKeyForEncryption"     : "Generar llave simétric para encriptación",
+	"mnemonicGenerateSymmetricKeyForEncryption" : "GenerarLlaveSimétricaParaEncriptación",
+	"childrenGenerateSymmetricKeyForEncryption" : [ "Algoritmo", "Opciones" ],
+	"leafGenerateSymmetricKeyForEncryption"     : "Generar llave simétrica para encriptación",
 	
 	"nameGenerateAsymmetricKeysForSigning"     : "Generar llaves asimétricas para firmado",
 	"mnemonicGenerateAsymmetricKeysForSigning" : "GenerarLlavesAsimétricasParaFirmado",
-	"childrenGenerateAsymmetricKeysForSigning" : "Algoritmo",
-	"leafGenerateAsymmetricKeysForSigning"     : "Generar llaves asimétricas para firmado",
+	"childrenGenerateAsymmetricKeysForSigning" : [ "Algoritmo", "Opciones" ],
+	"leafGenerateAsymmetricKeysForSigning"     : "Generar llaves para firmado",
 	
 	"pathEncryption" : "Criptografía.Encriptación",
 	
 	"nameEncrypt"     : "Encriptar",
 	"mnemonicEncrypt" : "Encriptar",
-	"childrenEncrypt" : [ "Datos a encriptar", "Llave" ],
+	"childrenEncrypt" : [ "Datos a encriptar", "Llave", "Opciones" ],
 	"leafEncrypt"     : "Encriptar",
 	
 	"nameDecrypt"     : "Desencriptar",
 	"mnemonicDecrypt" : "Desencriptar",
-	"childrenDecrypt" : [ "Datos encriptados", "Llave" ],
+	"childrenDecrypt" : [ "Datos encriptados", "Llave", "Opciones" ],
 	"leafDecrypt"     : "Desencriptar",
 	
 	"pathHashing" : "Criptografía.Hashing",
@@ -40,11 +45,20 @@
 	
 	"nameSign"     : "Firmar",
 	"mnemonicSign" : "Firmar",
-	"childrenSign" : [ "Datos", "Llave" ],
+	"childrenSign" : [ "Datos", "Llave", "Opciones" ],
 	"leafSign"     : "Firmar",
 	
 	"nameVerify"     : "Verificar firma",
 	"mnemonicVerify" : "VerificarFirma",
-	"childrenVerify" : [ "Datos", "Firma", "Llave" ],
-	"leafVerify"     : "Verificar firma"
+	"childrenVerify" : [ "Datos", "Firma", "Llave", "Opciones" ],
+	"leafVerify"     : "Verificar firma",
+	
+	"pathRandom" : "Cryptografía.Generación de números aleatorios",
+	
+	"nameRandom"     : "Aleatorio",
+	"mnemonicRandom" : "Aleatorio",
+	"childRandom"    : "Número de bytes",
+	"leafRandom"     : "Aleatorio",
+	
+	"pathAlgorithm" : "Cryptografía.Algoritmos"
 }

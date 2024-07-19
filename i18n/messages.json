@@ -9,24 +9,29 @@
 	
 	"nameGenerateAsymmetricKeysForEncryption"     : "Generate asymmetric keys for encryption",
 	"mnemonicGenerateAsymmetricKeysForEncryption" : "GenerateAsymmetricKeysForEncryption",
-	"childrenGenerateAsymmetricKeysForEncryption" : "Algorithm",
+	"childrenGenerateAsymmetricKeysForEncryption" : [ "Algorithm", "Options" ],
 	"leafGenerateAsymmetricKeysForEncryption"     : "Generate asymmetric keys for encryption",
+	
+	"nameGenerateSymmetricKeyForEncryption"     : "Generate symmetric key for encryption",
+	"mnemonicGenerateSymmetricKeyForEncryption" : "GenerateSymmetricKeyForEncryption",
+	"childrenGenerateSymmetricKeyForEncryption" : [ "Algorithm", "Options" ],
+	"leafGenerateSymmetricKeyForEncryption"     : "Generate symmetric key for encryption",
 	
 	"nameGenerateAsymmetricKeysForSigning"     : "Generate asymmetric keys for signing",
 	"mnemonicGenerateAsymmetricKeysForSigning" : "GenerateAsymmetricKeysForSigning",
-	"childrenGenerateAsymmetricKeysForSigning" : "Algorithm",
-	"leafGenerateAsymmetricKeysForSigning"     : "Generate asymmetric keys for signing",
+	"childrenGenerateAsymmetricKeysForSigning" : [ "Algorithm", "Options" ],
+	"leafGenerateAsymmetricKeysForSigning"     : "Generate keys for signing",
 	
 	"pathEncryption" : "Cryptography.Encryption",
 	
 	"nameEncrypt"     : "Encrypt",
 	"mnemonicEncrypt" : "Encrypt",
-	"childrenEncrypt" : [ "Plain", "Key" ],
+	"childrenEncrypt" : [ "Plain", "Key", "Options" ],
 	"leafEncrypt"     : "Encrypt",
 	
 	"nameDecrypt"     : "Decrypt",
 	"mnemonicDecrypt" : "Decrypt",
-	"childrenDecrypt" : [ "Cipher", "Key" ],
+	"childrenDecrypt" : [ "Cipher", "Key", "Options" ],
 	"leafDecrypt"     : "Decrypt",
 	
 	"pathHashing" : "Cryptography.Hashing",
@@ -40,11 +45,20 @@
 	
 	"nameSign"     : "Sign",
 	"mnemonicSign" : "Sign",
-	"childrenSign" : [ "Data", "Key" ],
+	"childrenSign" : [ "Data", "Key", "Options" ],
 	"leafSign"     : "Sign",
 	
 	"nameVerify"     : "Verify signature",
 	"mnemonicVerify" : "VerifySignature",
-	"childrenVerify" : [ "Data", "Signature", "Key" ],
-	"leafVerify"     : "Verify signature"
+	"childrenVerify" : [ "Data", "Signature", "Key", "Options" ],
+	"leafVerify"     : "Verify signature",
+	
+	"pathRandom" : "Cryptography.Random number generation",
+	
+	"nameRandom"     : "Random",
+	"mnemonicRandom" : "Random",
+	"childRandom"    : "Number of bytes",
+	"leafRandom"     : "Random",
+	
+	"pathAlgorithm" : "Cryptography.Algorithm"
 }
