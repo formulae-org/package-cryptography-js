@@ -14,19 +14,29 @@ The GitHub organization [formulae-org](https://github.com/formulae-org) encompas
 
 #### Key generation ####
 
-* Generation of asymmetric keys for encryption/decryption. [RSA-OAEP](https://www.rfc-editor.org/rfc/rfc3447#section-7.1) keys with either SHA-1, SHA-256, SHA-384, or SHA-512 digest function.
-* Generation of asymmetric keys for signing/verification. [RSASSA-PKCS1-v1_5](https://www.rfc-editor.org/rfc/rfc3447#section-8.2) keys with either SHA-1, SHA-256, SHA-384, or SHA-512 digest function.
+* Generation of asymmetric keys for encryption/decryption with the following algorithms:
+    * [RSA-OAEP](https://www.rfc-editor.org/rfc/rfc3447#section-7.1)
+
+* Generation of symmetric key for encryption/decryption with the following algorithms:
+    * [AES-CTR](https://w3c.github.io/webcrypto/#bib-nist-sp800-38a)
+    * [AES-CBC](https://w3c.github.io/webcrypto/#bib-nist-sp800-38a)
+    * [AES-GCM](https://w3c.github.io/webcrypto/#bib-nist-sp800-38d)
+
+* Generation of keys for signing/verification with the following algorithms:
+    * [RSASSA-PKCS1-v1_5](https://www.rfc-editor.org/rfc/rfc3447#section-8.2)
+    * [RSA-PSS](https://w3c.github.io/webcrypto/#bib-rfc3447)
+    * [ECDSA](https://w3c.github.io/webcrypto/#bib-rfc6090)
+    * [HMAC](https://w3c.github.io/webcrypto/#bib-fips-198-1)
 
 The keys are serialized as Base64 from their [PKCS #8 DER-encoded](https://en.wikipedia.org/wiki/PKCS_8) format for private keys, and [Subject Public Key Info (SPKI) DER-encoded](https://datatracker.ietf.org/doc/html/rfc5280#section-4.1) format for public keys.
 
 #### Hashing ####
 
 Supported algorithms:
-
-* SHA-1
-* SHA-256
-* SHA-384
-* SHA-512
+* [SHA-1]()
+* [SHA-256]()
+* [SHA-384]()
+* [SHA-512]()
 
 #### Encryption
 
@@ -40,6 +50,5 @@ Supported algorithms:
 
 #### (Pseudo)-randon number generation
 
-Pseudo-random number generation, but with enough entropy to be suitable for cryptographic purposes.
-
-It creates a byte buffer of a given size.
+* Pseudo-random number generation, but with enough entropy to be suitable for cryptographic purposes.
+* It creates a byte buffer of a given size.
