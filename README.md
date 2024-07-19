@@ -12,9 +12,7 @@ The GitHub organization [formulae-org](https://github.com/formulae-org) encompas
 
 ### Capabilities ###
 
-#### Key management ####
-
-##### Key generation #####
+#### Key generation ####
 
 * Generation of asymmetric keys for encryption/decryption. [RSA-OAEP](https://www.rfc-editor.org/rfc/rfc3447#section-7.1) keys with either SHA-1, SHA-256, SHA-384, or SHA-512 digest function.
 * Generation of asymmetric keys for signing/verification. [RSASSA-PKCS1-v1_5](https://www.rfc-editor.org/rfc/rfc3447#section-8.2) keys with either SHA-1, SHA-256, SHA-384, or SHA-512 digest function.
@@ -39,3 +37,9 @@ Supported algorithms:
 
 * Generation of a digital signture
 * Verification of a digital signature
+
+### (Pseudo) Randon number generation
+
+Pseudo-random number generation, but with enough entropy to be suitable for cryptographic purposes.
+
+It creates a byte buffer of a given size.
