@@ -38,7 +38,7 @@ Supported algorithms:
 * Generation of a digital signture
 * Verification of a digital signature
 
-### (Pseudo) Randon number generation
+#### (Pseudo)-randon number generation
 
 Pseudo-random number generation, but with enough entropy to be suitable for cryptographic purposes.
 
