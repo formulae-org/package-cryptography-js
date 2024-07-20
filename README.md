@@ -49,11 +49,10 @@ The Fōrmulæ cryptography package is basically a wrapper of the Javascript [Web
 <tr><td>RSASSA-PKCS1-v1_5<td>Public<td>Verify
 <tr><td>RSA-PSS<td>Public<td>Verify
 <tr><td>ECDSA<td>Public<td>Verify
-<tr><td>AES-CTR<td>Secret<td>Encrypt/decrypt<td rowspan="5">Base64 format from their raw bytes</td>
-<tr><td>AES-CBC<td>Secret<td>Encrypt/decrypt
-<tr><td>AES-GCM<td>Secret<td>Encrypt/decrypt
-<tr><td>HMAC<td>Private<td>Sign
-<tr><td>HMAC<td>Public<td>Verify
+<tr><td>AES-CTR<td>Secret<td>Encrypt / decrypt<td rowspan="5">Base64 format from their raw bytes</td>
+<tr><td>AES-CBC<td>Secret<td>Encrypt / decrypt
+<tr><td>AES-GCM<td>Secret<td>Encrypt / decrypt
+<tr><td>HMAC<td>Private / public<td>Sign / verify
 </table>
 
 #### Hashing ####
