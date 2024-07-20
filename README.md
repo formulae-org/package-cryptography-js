@@ -10,14 +10,16 @@ The GitHub organization [formulae-org](https://github.com/formulae-org) encompas
 
 <!-- Take a look at this [tutorial](https://formulae.org/?script=tutorials/Arithmetic) to know the capabilities of the Fōrmulæ arithmetic package. -->
 
-### Capabilities ###
+### Description ###
 
-Cryptography package is basically a wrapper of the [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API).
+The Fōrmulæ cryptography package is basically a wrapper of the [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API).
 
 > [!IMPORTANT]  
-> [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) is a powerful, low-level cryptography suite which uses real cryptographic algorithms and parameters. This Fōrmulæ package is intended to provide a higher-level interface for users and programmers. However, as with [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API), it is highly recommended that you have a medium to high knowledge of the cryptographic concepts and mathematical background to be used effectively in production.
+> [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) is a powerful, low-level cryptography suite which uses real cryptographic algorithms and parameters. This Fōrmulæ package is intended to provide a higher-level interface to users and programmers. However, as with [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API), it is highly recommended that you have a medium to high knowledge of the cryptographic concepts and mathematical background to be used effectively in production.
 > 
 > On the other hand, it is very suitable for educational purposes, but again, a basic to medium knowledge of cryptographic concepts is assumed.
+
+### Capabilities ###
 
 #### Key generation ####
 
