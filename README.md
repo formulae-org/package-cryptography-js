@@ -37,7 +37,24 @@ The Fōrmulæ cryptography package is basically a wrapper of the [Web Crypto API
     * [ECDSA](https://w3c.github.io/webcrypto/#bib-rfc6090)
     * [HMAC](https://w3c.github.io/webcrypto/#bib-fips-198-1)
 
-The keys are serialized as Base64 from their [PKCS #8 DER-encoded](https://en.wikipedia.org/wiki/PKCS_8) format for private keys, and [Subject Public Key Info (SPKI) DER-encoded](https://datatracker.ietf.org/doc/html/rfc5280#section-4.1) format for public keys.
+#### Key serialization ####
+
+<table>
+<tr><th>Algorithm<th>Key type<th>Usage<th>Key serialization
+<tr><td>RSA-OAEP<td>Private<td>Decrypt<td rowspan="4">Base64 format from their <a href="https://en.wikipedia.org/wiki/PKCS_8">PKCS #8 DER-encoded</a> format</td>
+<tr><td>RSASSA-PKCS1-v1_5<td>Private<td>Sign
+<tr><td>RSA-PSS<td>Private<td>Sign
+<tr><td>ECDSA<td>Private<td>Sign
+<tr><td>RSA-OAEP<td>Public<td>Encrypt<td rowspan="4">Base64 format from their <a href="https://datatracker.ietf.org/doc/html/rfc5280#section-4.1)">Subject Public Key Info (SPKI) DER-encoded</a> format</td>
+<tr><td>RSASSA-PKCS1-v1_5<td>Public<td>Verify
+<tr><td>RSA-PSS<td>Public<td>Verify
+<tr><td>ECDSA<td>Public<td>Verify
+<tr><td>AES-CTR<td>Secret<td>Encrypt/decrypt<td rowspan="5">Base64 format from their raw bytes</td>
+<tr><td>AES-CBC<td>Secret<td>Encrypt/decrypt
+<tr><td>AES-GCM<td>Secret<td>Encrypt/decrypt
+<tr><td>HMAC<td>Private<td>Sign
+<tr><td>HMAC<td>Public<td>Verify
+</table>
 
 #### Hashing ####
 
@@ -57,7 +74,7 @@ Supported algorithms:
 * Generation of a digital signture
 * Verification of a digital signature
 
-#### (Pseudo)-randon number generation
+#### Randon number generation
 
 * Pseudo-random number generation, but with enough entropy to be suitable for cryptographic purposes.
 * It creates a byte buffer of a given size.
