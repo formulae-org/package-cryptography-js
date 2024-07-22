@@ -40,10 +40,10 @@ Cryptography.RSAOptions = class extends CanonicalOptions {
 		this.name           = name;
 		this.modulusLength  = 2048;
 		this.publicExponent = Cryptography._65537;
-		this.hash           = "SHA-256";
+		//this.hash           = "SHA-256";
 	}
 	
-	checkOption(tag, option) {
+	checkOption(expression, option) {
 		let name = option.children[0].get("Value").toLowerCase();
 		let value = option.children[1];
 		
@@ -86,16 +86,24 @@ Cryptography.RSAOptions = class extends CanonicalOptions {
 		ReductionManager.setInError(option.children[0], "Unknown option");
 		return false;
 	}
+	
+	finalCheck(expression) {
+		if (this.hash === undefined) {
+			ReductionManager.setInError(expression, "Option ´Hash' is required");
+			return false;
+		}
+		
+		return true;
+	}
 }
 
 Cryptography.EllipticCurveOptions = class extends CanonicalOptions {
 	constructor(name) {
 		super();
-		this.name       = name;
-		this.namedCurve = "P-256";
+		this.name = name;
 	}
 	
-	checkOption(tag, option) {
+	checkOption(expression, option) {
 		let name = option.children[0].get("Value").toLowerCase();
 		let value = option.children[1];
 		
@@ -117,16 +125,24 @@ Cryptography.EllipticCurveOptions = class extends CanonicalOptions {
 		ReductionManager.setInError(option.children[0], "Unknown option");
 		return false;
 	}
+	
+	finalCheck(expression) {
+		if (this.namedCurve === undefined) {
+			ReductionManager.setInError(expression, "Option ´Named curve' is required");
+			return false;
+		}
+		
+		return true;
+	}
 }
 
 Cryptography.AESOptions = class extends CanonicalOptions {
 	constructor(name) {
 		super();
-		this.name    = name;
-		this.length  = 128;
+		this.name = name;
 	}
 	
-	checkOption(tag, option) {
+	checkOption(expression, option) {
 		let name = option.children[0].get("Value").toLowerCase();
 		let value = option.children[1];
 		
@@ -134,7 +150,7 @@ Cryptography.AESOptions = class extends CanonicalOptions {
 			case "length": {
 				let i = CanonicalArithmetic.getInteger(value);
 				if (i === undefined || !(i === 128 || i === 192 || i === 256)) {
-					ReductionManager.setInError(value, "Value must on of the nu,bers 128, 192 or 256");
+					ReductionManager.setInError(value, "Value must on of the numbers 128, 192 or 256");
 					return false;
 				}
 				
@@ -146,6 +162,15 @@ Cryptography.AESOptions = class extends CanonicalOptions {
 		ReductionManager.setInError(option.children[0], "Unknown option");
 		return false;
 	}
+	
+	finalCheck(expression) {
+		if (this.length === undefined) {
+			ReductionManager.setInError(expression, "Option ´Length' is required");
+			return false;
+		}
+		
+		return true;
+	}
 }
 
 Cryptography.HMACOptions = class extends CanonicalOptions {
@@ -154,7 +179,7 @@ Cryptography.HMACOptions = class extends CanonicalOptions {
 		this.name = "HMAC";
 	}
 	
-	checkOption(tag, option) {
+	checkOption(expression, option) {
 		let name = option.children[0].get("Value").toLowerCase();
 		let value = option.children[1];
 		
@@ -186,6 +211,15 @@ Cryptography.HMACOptions = class extends CanonicalOptions {
 		ReductionManager.setInError(option.children[0], "Unknown option");
 		return false;
 	}
+	
+	finalCheck(expression) {
+		if (this.hash === undefined) {
+			ReductionManager.setInError(expression, "Option ´Hash' is required");
+			return false;
+		}
+		
+		return true;
+	}
 }
 
 //////////////////////////////////////////////////
@@ -205,6 +239,7 @@ Cryptography.generateAsymmetricKeysForEncryption = async (generateKey, session) 
 	switch (algorithmTag) {
 		case "Cryptography.Algorithm.AsymmetricEncryption.RSA-OAEP":
 			options = new Cryptography.RSAOptions(algorithmTag.substr(44));
+			console.log(options);
 			break;
 		
 		default:
@@ -212,9 +247,7 @@ Cryptography.generateAsymmetricKeysForEncryption = async (generateKey, session) 
 			throw new ReductionError();
 	}
 	
-	if (optionsExpr !== undefined && !options.checkOptions("", optionsExpr)) {
-		return false;
-	}
+	options.checkOptions(generateKey, optionsExpr);
 	
 	// Ok
 	
@@ -265,9 +298,7 @@ Cryptography.generateSymmetricKeyForEncryption = async (generateKey, session) =>
 			throw new ReductionError();
 	}
 	
-	if (optionsExpr !== undefined && !options.checkOptions("", optionsExpr)) {
-		return false;
-	}
+	options.checkOptions(generateKey, optionsExpr);
 	
 	// Ok
 	
@@ -317,9 +348,7 @@ Cryptography.generateAsymmetricKeysForSigning = async (generateKey, session) => 
 			throw new ReductionError();
 	}
 	
-	if (optionsExpr !== undefined && !options.checkOptions("", optionsExpr)) {
-		return false;
-	}
+	options.checkOptions(generateKey, optionsExpr);
 	
 	// Ok
 	
@@ -409,7 +438,7 @@ Cryptography.RSA_OAEP_Options = class extends CanonicalOptions {
 		this.name = "RSA-OAEP";
 	}
 	
-	checkOption(tag, option) {
+	checkOption(expression, option) {
 		let name = option.children[0].get("Value").toLowerCase();
 		let value = option.children[1];
 		
@@ -434,11 +463,9 @@ Cryptography.AES_CTR_Options = class extends CanonicalOptions {
 	constructor() {
 		super();
 		this.name = "AES-CTR";
-		this.counter = null;
-		this.length = 64
 	}
 	
-	checkOption(tag, option) {
+	checkOption(expression, option) {
 		let name = option.children[0].get("Value").toLowerCase();
 		let value = option.children[1];
 		
@@ -468,16 +495,37 @@ Cryptography.AES_CTR_Options = class extends CanonicalOptions {
 		ReductionManager.setInError(option.children[0], "Unknown option");
 		return false;
 	}
+	
+	finalCheck(expression) {
+		let missing = [];
+		
+		if (this.counter === undefined) {
+			missing.push("Counter");
+		}
+		
+		if (this.length === undefined) {
+			missing.push("Length");
+		}
+		
+		if (missing.length > 0) {
+			ReductionManager.setInError(
+				expression,
+				"The following options [" + missing.forEach(option => "'" + option + "'").join(",") + "] are required"
+			);
+			return false;
+		}
+		
+		return true;
+	}
 }
 
 Cryptography.AES_CBC_Options = class extends CanonicalOptions {
 	constructor() {
 		super();
 		this.name = "AES-CBC";
-		this.initializationVector = null;
 	}
 	
-	checkOption(tag, option) {
+	checkOption(expression, option) {
 		let name = option.children[0].get("Value").toLowerCase();
 		let value = option.children[1];
 		
@@ -496,18 +544,24 @@ Cryptography.AES_CBC_Options = class extends CanonicalOptions {
 		ReductionManager.setInError(option.children[0], "Unknown option");
 		return false;
 	}
+	
+	finalCheck(expression) {
+		if (this.hash === initializationVector) {
+			ReductionManager.setInError(expression, "Option ´Initialization vector' is required");
+			return false;
+		}
+		
+		return true;
+	}
 }
 
 Cryptography.AES_GCM_Options = class extends CanonicalOptions {
 	constructor() {
 		super();
 		this.name = "AES-GCM";
-		this.initializationVector = null;
-		this.additionalData = null;
-		this.tagLength = null;
 	}
 	
-	checkOption(tag, option) {
+	checkOption(expression, option) {
 		let name = option.children[0].get("Value").toLowerCase();
 		let value = option.children[1];
 		
@@ -546,6 +600,15 @@ Cryptography.AES_GCM_Options = class extends CanonicalOptions {
 		ReductionManager.setInError(option.children[0], "Unknown option");
 		return false;
 	}
+	
+	finalCheck(expression) {
+		if (this.hash === initializationVector) {
+			ReductionManager.setInError(expression, "Option ´Initialization vector' is required");
+			return false;
+		}
+		
+		return true;
+	}
 }
 
 Cryptography.encrypt = async (encrypt, session) => {
@@ -581,9 +644,7 @@ Cryptography.encrypt = async (encrypt, session) => {
 			break;
 	}
 	
-	if (optionsExpr !== undefined && !options.checkOptions("", optionsExpr)) {
-		return false;
-	}
+	options.checkOptions(encrypt, optionsExpr);
 	
 	// plain text
 	
@@ -662,9 +723,7 @@ Cryptography.decrypt = async (decrypt, session) => {
 			break;
 	}
 	
-	if (optionsExpr !== undefined && !options.checkOptions("", optionsExpr)) {
-		return false;
-	}
+	options.checkOptions(decrypt, optionsExpr);
 	
 	// cipher text
 	
@@ -715,10 +774,9 @@ Cryptography.RSA_PSS_Options = class extends CanonicalOptions {
 	constructor() {
 		super();
 		this.name = "RSA-PSS";
-		this.saltLength = 0;
 	}
 	
-	checkOption(tag, option) {
+	checkOption(expression, option) {
 		let name = option.children[0].get("Value").toLowerCase();
 		let value = option.children[1];
 		
@@ -738,16 +796,24 @@ Cryptography.RSA_PSS_Options = class extends CanonicalOptions {
 		ReductionManager.setInError(option.children[0], "Unknown option");
 		return false;
 	}
+	
+	finalCheck(expression) {
+		if (this.saltLength === initializationVector) {
+			ReductionManager.setInError(expression, "Option ´Salt length' is required");
+			return false;
+		}
+		
+		return true;
+	}
 }
 
 Cryptography.ECDSA_Options = class extends CanonicalOptions {
 	constructor() {
 		super();
 		this.name = "ECDSA";
-		this.hash = null;
 	}
 	
-	checkOption(tag, option) {
+	checkOption(expression, option) {
 		let name = option.children[0].get("Value").toLowerCase();
 		let value = option.children[1];
 		
@@ -765,6 +831,15 @@ Cryptography.ECDSA_Options = class extends CanonicalOptions {
 		
 		ReductionManager.setInError(option.children[0], "Unknown option");
 		return false;
+	}
+	
+	finalCheck(expression) {
+		if (this.hash === initializationVector) {
+			ReductionManager.setInError(expression, "Option ´Hash' is required");
+			return false;
+		}
+		
+		return true;
 	}
 }
 
@@ -785,24 +860,28 @@ Cryptography.sign = async (sign, session) => {
 	
 	switch (key.algorithm.name) {
 		case "RSASSA-PKCS1-v1_5":
+			if (optionsExpr !== undefined) {
+				ReductionManager.setInError(optionsExpr, "No options required");
+				throw new ReductionError();
+			}
 			options = { "name": "RSASSA-PKCS1-v1_5" };
 			break;
 		
 		case "RSA-PSS":
 			options = new Cryptography.RSA_PSS_Options();
-			if (optionsExpr !== undefined && !options.checkOptions("", optionsExpr)) {
-				return false;
-			}
+			options.checkOptions(sign, optionsExpr);
 			break;
 		
 		case "ECDSA":
 			options = new Cryptography.ECDSA_Options();
-			if (optionsExpr !== undefined && !options.checkOptions("", optionsExpr)) {
-				return false;
-			}
+			options.checkOptions(sign, optionsExpr);
 			break;
 		
 		case "HMAC":
+			if (optionsExpr !== undefined) {
+				ReductionManager.setInError(optionsExpr, "No options required");
+				throw new ReductionError();
+			}
 			options = { "name": "HMAC" };
 			break;
 	}
@@ -860,29 +939,33 @@ Cryptography.verify = async (verify, session) => {
 	
 	// options
 	
-	let optionsExpr = sign.children[2];
+	let optionsExpr = verify.children[2];
 	let options;
 	
 	switch (key.algorithm.name) {
 		case "RSASSA-PKCS1-v1_5":
+			if (optionsExpr !== undefined) {
+				ReductionManager.setInError(optionsExpr, "No options required");
+				throw new ReductionError();
+			}
 			options = { "name": "RSASSA-PKCS1-v1_5" };
 			break;
 		
 		case "RSA-PSS":
 			options = new Cryptography.RSA_PSS_Options();
-			if (optionsExpr !== undefined && !options.checkOptions("", optionsExpr)) {
-				return false;
-			}
+			options.checkOptions(sign, optionsExpr);
 			break;
 		
 		case "ECDSA":
 			options = new Cryptography.ECDSA_Options();
-			if (optionsExpr !== undefined && !options.checkOptions("", optionsExpr)) {
-				return false;
-			}
+			options.checkOptions(sign, optionsExpr);
 			break;
 		
 		case "HMAC":
+			if (optionsExpr !== undefined) {
+				ReductionManager.setInError(optionsExpr, "No options required");
+				throw new ReductionError();
+			}
 			options = { "name": "HMAC" };
 			break;
 	}

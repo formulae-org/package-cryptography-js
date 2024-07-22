@@ -158,9 +158,10 @@ Cryptography.Key = class extends Expression.Literal {
 		*/
 		
 		switch (algorithmName) {
-			case "RSA-OAEP":          // encryption
+			case "RSA-OAEP":          // asymmetric encryption
 			case "RSASSA-PKCS1-v1_5": // signing
 			case "RSA-PSS":           // signing
+			case "ECDSA":             // signing
 				{
 					if (type == "private") {
 						format = "pkcs8";
@@ -177,14 +178,18 @@ Cryptography.Key = class extends Expression.Literal {
 				}
 				break;
 			
-			case "AES-CTR":
-			case "AES-CBC":
-			case "AES-GCM":
+			case "AES-CTR": // symmetric encryption
+			case "AES-CBC": // symmetric encryption
+			case "AES-GCM": // symmetric encryption
+			case "HMAC":    // signing
 				{
 					format = "raw";
 					keyData = Utils.base64ToBytes(strings[0]);
 					algorithm = { name: algorithmName, length: Number(parameter) };
-					keyUsages = [ "encrypt", "decrypt" ];
+					keyUsages =
+						algorithmName === "HMAC" ?
+						[ type == "private" ? "sign" : "verify" ] :
+						[ "encrypt", "decrypt" ];
 				}
 				break;
 		}
