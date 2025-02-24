@@ -49,7 +49,7 @@ Cryptography.RSAOptions = class extends CanonicalOptions {
 		
 		switch (name) {
 			case "modulus length": {
-				let i = CanonicalArithmetic.getNativeInteger(value);
+				let i = Arithmetic.getNativeInteger(value);
 				if (i === undefined || i <= 0) {
 					ReductionManager.setInError(value, "Value must be a positive integer number");
 					return false;
@@ -60,7 +60,7 @@ Cryptography.RSAOptions = class extends CanonicalOptions {
 			}
 			
 			case "public exponent": {
-				let i = CanonicalArithmetic.getNativeInteger(value);
+				let i = Arithmetic.getNativeInteger(value);
 				if (i === undefined || !(i == 3 || i === 65537)) {
 					ReductionManager.setInError(value, "Value must be 3 or 65,537");
 					return false;
@@ -148,7 +148,7 @@ Cryptography.AESOptions = class extends CanonicalOptions {
 		
 		switch (name) {
 			case "length": {
-				let i = CanonicalArithmetic.getNativeInteger(value);
+				let i = Arithmetic.getNativeInteger(value);
 				if (i === undefined || !(i === 128 || i === 192 || i === 256)) {
 					ReductionManager.setInError(value, "Value must on of the numbers 128, 192 or 256");
 					return false;
@@ -197,7 +197,7 @@ Cryptography.HMACOptions = class extends CanonicalOptions {
 			}
 			
 			case "length": {
-				let i = CanonicalArithmetic.getNativeInteger(value);
+				let i = Arithmetic.getNativeInteger(value);
 				if (i === undefined || i <= 0) {
 					ReductionManager.setInError(value, "Value must be a positive integer number");
 					return false;
@@ -481,7 +481,7 @@ Cryptography.AES_CTR_Options = class extends CanonicalOptions {
 			}
 			
 			case "length": {
-				let i = CanonicalArithmetic.getNativeInteger(value);
+				let i = Arithmetic.getNativeInteger(value);
 				if (i === undefined || i < 0 || i > 128) {
 					ReductionManager.setInError(value, "Value must be a number between 0 and 128");
 					return false;
@@ -586,7 +586,7 @@ Cryptography.AES_GCM_Options = class extends CanonicalOptions {
 				return true;
 			}
 			case "tag length": {
-				let i = CanonicalArithmetic.getNativeInteger(value);
+				let i = Arithmetic.getNativeInteger(value);
 				if (i === undefined || !([ 32, 64, 96, 104, 112, 120, 128].contains(i))) {
 					ReductionManager.setInError(value, "Value must be one of the following numbers: 32, 64, 96, 104, 112, 120, 128");
 					return false;
@@ -782,7 +782,7 @@ Cryptography.RSA_PSS_Options = class extends CanonicalOptions {
 		
 		switch (name) {
 			case "salt length": {
-				let i = CanonicalArithmetic.getNativeInteger(value);
+				let i = Arithmetic.getNativeInteger(value);
 				if (i === undefined || i < 0) {
 					ReductionManager.setInError(value, "Value must be a non-negative number");
 					return false;
@@ -1024,7 +1024,7 @@ Cryptography.verify = async (verify, session) => {
 };
 
 Cryptography.random = async (random, session) => {
-	let n = CanonicalArithmetic.getNativeInteger(random.children[0]);
+	let n = Arithmetic.getNativeInteger(random.children[0]);
 	if (n === undefined || n < 0) {
 		ReductionManager.setInError(random.children[0], "Invalid number of bytes");
 		throw new ReductionError();
