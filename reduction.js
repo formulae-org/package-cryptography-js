@@ -238,7 +238,7 @@ Cryptography.generateAsymmetricKeysForEncryption = async (generateKey, session) 
 	
 	switch (algorithmTag) {
 		case "Cryptography.Algorithm.AsymmetricEncryption.RSA-OAEP":
-			options = new Cryptography.RSAOptions(algorithmTag.substr(44));
+			options = new Cryptography.RSAOptions(algorithmTag.substring(44));
 			console.log(options);
 			break;
 		
@@ -290,7 +290,7 @@ Cryptography.generateSymmetricKeyForEncryption = async (generateKey, session) =>
 		case "Cryptography.Algorithm.SymmetricEncryption.AES-CTR":
 		case "Cryptography.Algorithm.SymmetricEncryption.AES-CBC":
 		case "Cryptography.Algorithm.SymmetricEncryption.AES-GCM":
-			options = new Cryptography.AESOptions(algorithmTag.substr(43));
+			options = new Cryptography.AESOptions(algorithmTag.substring(43));
 			break;
 		
 		default:
@@ -332,11 +332,11 @@ Cryptography.generateAsymmetricKeysForSigning = async (generateKey, session) => 
 	switch (algorithmTag) {
 		case "Cryptography.Algorithm.Signing.RSASSA-PKCS1-v1_5":
 		case "Cryptography.Algorithm.Signing.RSA-PSS":
-			options = new Cryptography.RSAOptions(algorithmTag.substr(31));
+			options = new Cryptography.RSAOptions(algorithmTag.substring(31));
 			break;
 		
 		case "Cryptography.Algorithm.Signing.ECDSA":
-			options = new Cryptography.EllipticCurveOptions(algorithmTag.substr(31));
+			options = new Cryptography.EllipticCurveOptions(algorithmTag.substring(31));
 			break;
 		
 		case "Cryptography.Algorithm.Signing.HMAC":
