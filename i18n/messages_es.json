@@ -5,14 +5,14 @@
 	
 	"nameKeySecret"  : "Llave secreta",
 	"nameKeyPrivate" : "Llave Privada",
-	"nameKeyPublic"  : "Llave publica",
+	"nameKeyPublic"  : "Llave pública",
 	
 	"nameGenerateAsymmetricKeysForEncryption"     : "Generar llaves asimétricas para encriptación",
 	"mnemonicGenerateAsymmetricKeysForEncryption" : "GenerarLlavesAsimétricasParaEncriptación",
 	"childrenGenerateAsymmetricKeysForEncryption" : [ "Algoritmo", "Opciones" ],
 	"leafGenerateAsymmetricKeysForEncryption"     : "Generar llaves asimétricas para encriptación",
 	
-	"nameGenerateSymmetricKeyForEncryption"     : "Generar llave simétric para encriptación",
+	"nameGenerateSymmetricKeyForEncryption"     : "Generar llave simétrica para encriptación",
 	"mnemonicGenerateSymmetricKeyForEncryption" : "GenerarLlaveSimétricaParaEncriptación",
 	"childrenGenerateSymmetricKeyForEncryption" : [ "Algoritmo", "Opciones" ],
 	"leafGenerateSymmetricKeyForEncryption"     : "Generar llave simétrica para encriptación",
