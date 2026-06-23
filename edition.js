@@ -16,7 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-'use strict';
+"use strict";
 
 export class Cryptography extends Formulae.EditionPackage {};
 
@@ -73,7 +73,6 @@ Cryptography.setEditions = function() {
 		[ "Signing", "Signing", "RSA-PSS"           ],
 		[ "Signing", "Signing", "ECDSA"             ],
 		[ "Signing", "Signing", "HMAC"              ],
-
 	].forEach(
 		row => Formulae.addEdition(
 		"Cryptography.Algorithm." + row[0],
