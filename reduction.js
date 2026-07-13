@@ -399,14 +399,7 @@ Cryptography.hash = async (digest, session) => {
 			break;
 		
 		case "FileSystem.File":
-			data = await new Promise((resolve, reject) => {
-				let fileReader = new FileReader();
-				fileReader.onload = () => {
-					resolve(fileReader.result);
-				};
-				fileReader.onerror = reject;
-				fileReader.readAsArrayBuffer(source.get("Value"));
-			});
+			data = await (await source.getFile()).arrayBuffer();
 			break;
 		
 		default:
@@ -657,16 +650,7 @@ Cryptography.encrypt = async (encrypt, session) => {
 			break;
 			
 		case "FileSystem.File":
-			data = await new Promise(
-				(resolve, reject) => {
-					let fileReader = new FileReader();
-					fileReader.onload = () => {
-						resolve(fileReader.result);
-					};
-					fileReader.onerror = reject;
-					fileReader.readAsArrayBuffer(plain.get("Value"));
-				}
-			);
+			data = await (await plain.getFile()).arrayBuffer();
 			break;
 		
 		default:
@@ -736,14 +720,7 @@ Cryptography.decrypt = async (decrypt, session) => {
 			break;
 			
 		case "FileSystem.File":
-			data = await new Promise((resolve, reject) => {
-				let fileReader = new FileReader();
-				fileReader.onload = () => {
-					resolve(fileReader.result);
-				};
-				fileReader.onerror = reject;
-				fileReader.readAsArrayBuffer(cipher.get("Value"));
-			});
+			data = await (await cipher.getFile()).arrayBuffer();
 			break;
 			
 		default:
@@ -897,14 +874,7 @@ Cryptography.sign = async (sign, session) => {
 			break;
 		
 		case "FileSystem.File":
-			data = await new Promise((resolve, reject) => {
-				let fileReader = new FileReader();
-				fileReader.onload = () => {
-					resolve(fileReader.result);
-				};
-				fileReader.onerror = reject;
-				fileReader.readAsArrayBuffer(dataExpr.get("Value"));
-			});
+			data = await (await dataExpr.getFile()).arrayBuffer();
 			break;
 		
 		default:
@@ -981,14 +951,7 @@ Cryptography.verify = async (verify, session) => {
 			break;
 		
 		case "FileSystem.File":
-			data = await new Promise((resolve, reject) => {
-				let fileReader = new FileReader();
-				fileReader.onload = () => {
-					resolve(fileReader.result);
-				};
-				fileReader.onerror = reject;
-				fileReader.readAsArrayBuffer(dataExpr.get("Value"));
-			});
+			data = await (await dataExpr.getFile()).arrayBuffer();
 			break;
 		
 		default:

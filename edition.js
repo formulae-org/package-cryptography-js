@@ -28,7 +28,7 @@ Cryptography.setEditions = function() {
 	].forEach(
 		tag => Formulae.addEdition(
 			this.messages.pathKey,
-			null,
+			Formulae.icon("Cryptography.Key." + tag, 1),
 			this.messages["leaf" + tag],
 			() => Expression.wrapperEdition("Cryptography.Key." + tag)
 		)
@@ -45,7 +45,7 @@ Cryptography.setEditions = function() {
 	].forEach(
 		row => Formulae.addEdition(
 			this.messages["path" + row[0]],
-			null,
+			Formulae.icon("Cryptography." + row[0] + "." + row[1], row[2]),
 			this.messages["leaf" + row[1]],
 			() => Expression.multipleEdition("Cryptography." + row[0] + "." + row[1], row[2], 0)
 		)
@@ -53,7 +53,7 @@ Cryptography.setEditions = function() {
 	
 	Formulae.addEdition(
 		this.messages.pathRandom,
-		null,
+		Formulae.icon("Cryptography.Random", 1),
 		this.messages.leafRandom,
 		() => Expression.multipleEdition("Cryptography.Random", 1, 0)
 	);
@@ -76,7 +76,7 @@ Cryptography.setEditions = function() {
 	].forEach(
 		row => Formulae.addEdition(
 		"Cryptography.Algorithm." + row[0],
-		null,
+		`<expression tag="Cryptography.Algorithm.${row[1]}.${row[2]}"/>`,
 		row[2],
 		() => Expression.replacingEdition("Cryptography.Algorithm." + row[1] + "." + row[2])
 	));
